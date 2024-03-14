@@ -1,0 +1,13 @@
+
+        // Your web app's Firebase configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyDUWFa23--6jLt3xyK9zsbLjESvz7wLQzU",
+            authDomain: "neww-cdfbe.firebaseapp.com",
+            projectId: "neww-cdfbe",
+            storageBucket: "neww-cdfbe.appspot.com",
+            messagingSenderId: "224844909662",
+            appId: "1:224844909662:web:d6c253023c37149c9cf8cf",
+            measurementId: "G-P6N5ETJRP5"
+        };
+
+       

@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" href="login.css">
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h2>Login Form</h2>
+        </div>
+        <form id="loginForm">
+            <div class="inputbox">
+                <input type="email" id="email" required>
+                <span>Email</span>
+            </div>
+            <div class="inputbox">
+                <input type="password" id="password" required>
+                <span>Password</span>
+            </div>
+            <button type="submit" class="sub">Login</button>
+            <a href="/signup.html">Don't have an account?</a>
+        </form>
+    </div>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-app.js";
+        import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-auth.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyDUWFa23--6jLt3xyK9zsbLjESvz7wLQzU",
+            authDomain: "neww-cdfbe.firebaseapp.com",
+            projectId: "neww-cdfbe",
+            storageBucket: "neww-cdfbe.appspot.com",
+            messagingSenderId: "224844909662",
+            appId: "1:224844909662:web:d6c253023c37149c9cf8cf",
+            measurementId: "G-P6N5ETJRP5"
+        };  
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth();
+
+        document.getElementById("loginForm").addEventListener('submit', function(e){
+            e.preventDefault();
+            const email = document.getElementById("email").value;
+            const password = document.getElementById("password").value;
+
+            signInWithEmailAndPassword(auth, email, password)
+            .then((userCredential) => {
+                // Signed in
+                const user = userCredential.user;
+                alert("Login Successful!");
+                window.location.href = "index.html";
+            })
+            .catch((error) => {
+    console.error("Firebase Authentication Error:", error.code, error.message);
+    alert("Authentication failed. Please check your credentials.");
+});
+
+        });
+    </script>
+</body>
+</html>

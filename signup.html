@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up</title>
+    <link rel="stylesheet" href="login.css">
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h2>Registration Form</h2>
+        </div>
+        <form id="registerForm">
+            <div class="inputbox">
+                <input type="text" id="username" required placeholder="Username">
+            </div>
+            <div class="inputbox">
+                <input type="email" id="email" required placeholder="Email">
+            </div>
+            <div class="inputbox">
+                <input type="password" id="password" required placeholder="Password">
+            </div>
+            <hr>
+            <input type="submit" value="Register" class="sub">
+            <a href="/login.html">Already have an account?</a>
+        </form>
+    </div>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-app.js";
+        import { getAuth, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-auth.js";
+        import { getDatabase, ref, set } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-database.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyDUWFa23--6jLt3xyK9zsbLjESvz7wLQzU",
+            authDomain: "neww-cdfbe.firebaseapp.com",
+            projectId: "neww-cdfbe",
+            storageBucket: "neww-cdfbe.appspot.com",
+            messagingSenderId: "224844909662",
+            appId: "1:224844909662:web:d6c253023c37149c9cf8cf",
+            measurementId: "G-P6N5ETJRP5"
+        };
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const db = getDatabase();
+        const auth = getAuth();
+
+        document.getElementById("registerForm").addEventListener('submit', function(e){
+            e.preventDefault();
+            const email = document.getElementById("email").value;
+            const password = document.getElementById("password").value;
+
+            createUserWithEmailAndPassword(auth, email, password)
+            .then((userCredential) => {
+                const user = userCredential.user;
+                set(ref(db, 'user/' + user.uid), {
+                    username: document.getElementById("username").value,
+                    email: email
+                }).then(() => {
+                    alert("Registration Successful!");
+                    window.location.href = "index.html";
+                }).catch((error) => {
+                    console.error("Error adding document: ", error);
+                });
+            })
+            .catch((error) => {
+                const errorCode = error.code;
+                const errorMessage = error.message;
+                alert(errorMessage);
+            });
+        });
+    </script>
+</body>
+</html>

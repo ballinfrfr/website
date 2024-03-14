@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home Page</title>
+</head>
+<body>
+    <div id="userList"></div>
+    
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-app.js";
+        import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-database.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyDUWFa23--6jLt3xyK9zsbLjESvz7wLQzU",
+            authDomain: "neww-cdfbe.firebaseapp.com",
+            projectId: "neww-cdfbe",
+            storageBucket: "neww-cdfbe.appspot.com",
+            messagingSenderId: "224844909662",
+            appId: "1:224844909662:web:d6c253023c37149c9cf8cf",
+            measurementId: "G-P6N5ETJRP5"
+        };
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const db = getDatabase();
+
+        const userListDiv = document.getElementById('userList');
+
+        // Function to fetch and display user data
+        function displayUsers() {
+            const usersRef = ref(db, 'user');
+            onValue(usersRef, (snapshot) => {
+                const users = snapshot.val();
+                userListDiv.innerHTML = ''; // Clear previous data
+                if (users) {
+                    Object.keys(users).forEach((userId) => {
+                        const userData = users[userId];
+                        const username = userData.username;
+                        const userDiv = document.createElement('div');
+                        userDiv.textContent = username;
+                        userListDiv.appendChild(userDiv);
+                    });
+                }
+            });
+        }
+
+        // Call the function to display users when the page loads
+        displayUsers();
+    </script>
+</body>
+</html>
